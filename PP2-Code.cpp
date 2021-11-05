@@ -19,10 +19,11 @@
 //   Change Log:
 //           Version         User        Date            Changes
 // -------------------------------------------------------------------------------------------------------------------
-//           1.0             Rgtz18      11/04/2021      Created header for code, added develoment team names
+//           1.0             Rgtz18      11/04/2021      Created header for code, added develoment team names, added directives
 // ===================================================================================================================
 
 
 #include <iostream>
 #include <algorithm>
+#include <fstream>
 using namespace std;
