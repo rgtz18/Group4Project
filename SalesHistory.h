@@ -10,6 +10,7 @@ class SalesHistory
 		void SalesHistoryMenu();
 		void PurchaseProduct();
 		void PrintSaleHistory(Sales currentSale);
+		void PrintSaleHistoryTitles();
 		void PrintAllSalesHistory();
 		void PrintClientSalesHistory();
 		void UpdateSales(string option, string updateInfo);

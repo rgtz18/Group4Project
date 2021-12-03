@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <cctype>
 using namespace std;
@@ -128,13 +129,33 @@ void SalesHistory::PurchaseProduct() {
 
 //Prints current sale from file
 void SalesHistory::PrintSaleHistory(Sales currentSale) {
-	cout << currentSale.GetSaleID() << " " << currentSale.GetDate() << " " << currentSale.GetClientID() << " ";
-	cout << currentSale.GetProductID() << " " << currentSale.GetProductSales() << " " << currentSale.GetSalesRepID() << endl;
+	cout << left << setfill(' ');
+	cout << setw(11) << currentSale.GetSaleID() << "| ";
+	cout << setw(11) << currentSale.GetDate() << "| ";
+	cout << setw(11) << currentSale.GetClientID() << "| ";
+	cout << setw(11) << currentSale.GetProductID() << "| ";
+	cout << setprecision(4) << setw(11) << currentSale.GetProductSales() << "| ";
+	cout << setprecision(2) << setw(11) << currentSale.GetSalesRepID() << endl;
+	cout << right;
+}
+
+//Print titles of each sale information category
+void SalesHistory::PrintSaleHistoryTitles() {
+	cout << left << setfill(' ');
+	cout << setw(11) << "SaleID" << "| ";
+	cout << setw(11) << "Date" << "| ";
+	cout << setw(11) << "ClientID" << "| ";
+	cout << setw(11) << "ProductID" << "| ";
+	cout << setw(11) << "Sales" << "| ";
+	cout << setw(11) << "RepID" << endl;
+	cout << setfill('-') << setw(76) << "" << endl;
+	cout << right;
 }
 
 //Prints all sales from file
 void SalesHistory::PrintAllSalesHistory() {
 	unsigned int i;
+	PrintSaleHistoryTitles();
 	for (i = 0; i < allSales.size(); ++i) {
 		Sales currentSale = allSales.at(i);
 		PrintSaleHistory(currentSale);
@@ -156,6 +177,16 @@ void SalesHistory::PrintClientSalesHistory() {
 			//Checks if client ID exists
 			if (to_string(currentSale.GetClientID()) == clientID) {
 				clientExists = true;
+			}
+		}
+		//Prints titles for each sale information category
+		if (clientExists == true) {
+			PrintSaleHistoryTitles();
+		}
+		//Prints each sale belonging to specified client
+		for (i = 0; i < allSales.size(); ++i) {
+			Sales currentSale = allSales.at(i);
+			if (to_string(currentSale.GetClientID()) == clientID) {
 				PrintSaleHistory(currentSale);
 			}
 		}
