@@ -5,12 +5,12 @@ Jim_Halpert
 2
 Dwight_Schrute
 67891_False_Road
-75000
+68000
 3
 Michael_Scott
 10111_Dummy_Blvd
-100000
+27000
 4
 Pam_Halpert
 12345_Fake_Street
-999999
+50000
