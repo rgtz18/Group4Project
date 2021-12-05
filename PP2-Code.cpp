@@ -14,6 +14,8 @@
 //         + Sales Rep categories
 //         + Sales Rep class
 //       - Caldwell, Aaron
+//         + Product class
+//         + Product menu
 //       - Delgado, Stepahnie
 //       - Escobedo, Jonathan
 //       - Kim, Arthur
@@ -31,6 +33,7 @@
 #include <algorithm>
 #include <fstream>
 #include <string>
+#include "Product.h"
 using namespace std;
 ifstream inFS;   // Input file stream
 string fileRowData;     // File data
@@ -352,8 +355,70 @@ cin >> userSelect;
 }      
 }
 
-
-
+void ProductMenu() {
+   char userSelect = '0';
+   string productName;
+   double productPrice;
+   double productSales;
+   
+   while(userSelect != '1' && userSelect != '2' && userSelect != '3' && userSelect != '4' && userSelect != '5' && userSelect != '6' && userSelect != '7') {
+      
+      cout << "1) Add Product" << endl;
+      cout << "2) Remove Product" << endl;
+      cout << "3) Update Product" << endl;
+      cout << "4) Save Product List" << endl;
+      cout << "5) Print Product" << endl;
+      cout << "6) Print All Products" << endl;
+      cout << "7) Print Monthly Sales Report" << endl;
+      cout << endl;
+      cout << "Choose an option: " << endl;
+      
+      cin >> userSelect;
+      
+      if (userSelect == '1') {
+         cout << "Enter a product name: " << endl;
+         cin >> productName;
+         cout << "Enter the price of the product: " << endl;
+         cin >> productPrice;
+         cout << "Enter the sales of the product: " << endl;
+         cin >> productSales;
+         AddProduct(productName, productPrice, productSales);
+      }
+      else if (userSelect == '2') {
+         cout << "Enter the name of the product you want to remove: " << endl;
+         cin >> productName;
+         RemoveProduct(productName);
+      }
+      else if (userSelect == '3') {
+         cout << "Enter the name of the product you want to update: " << endl;
+         cin >> productName;
+         cout << "Enter the new price of the product: " << endl;
+         cin >> productPrice;
+         cout << "Enter the sales of the product: " << endl;
+         cin >> productSales;
+         UpdateProduct(productName, productPrice, productSales);
+      }
+      else if (userSelect == '4') {
+         SaveProduct();
+         cout << "Product List saved." << endl;
+         cout << endl;
+      }
+      else if (userSelect == '5') {
+         cout << "Enter the name of the product you want to print: " << endl;
+         cin >> productName;
+         PrintProduct(productName);
+      }
+      else if (userSelect == '6') {
+         PrintAllProducts();
+      }
+      else if (userSelect == '7') {
+         PrintMonthlySales();
+      }
+      else {
+         cout << "Pressed Wrong Key. Press any key to try again " << endl;
+      }
+   }
+}
 
 int main () {
 
