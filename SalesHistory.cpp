@@ -7,6 +7,7 @@
 #include <cctype>
 using namespace std;
 
+//constructor, gets info from file and stores it in a vector
 SalesHistory::SalesHistory() {
 	ifstream inFS;
 
@@ -40,6 +41,7 @@ void SalesHistory::SalesHistoryMenu() {
 	string userSelect = "";
 	string selectedID = "";
 
+	//loop for user input until they enter the letter 'q'
 	while (userSelect != "q") {
 		cout << endl;
 		cout << "Sales Menu" << endl;
@@ -53,7 +55,7 @@ void SalesHistory::SalesHistoryMenu() {
 		getline(cin, userSelect);
 		cout << endl;
 
-		//options must be numbers 1-4 or q
+		//options must be numbers 1-4 or q, calls function respective to option stated
 		if (userSelect == "1") {
 			PurchaseProduct();
 		}
@@ -75,24 +77,38 @@ void SalesHistory::SalesHistoryMenu() {
 }
 
 //Allows user to enter a number and checks if it is a number
-string enterNumber() {
+string SalesHistory::enterNumber() {
 	string number;
 	bool isNumber = false;
 	unsigned int i;
 
 	getline(cin, number);
-	while (isNumber == false) {
+	//loop for asking user for input until they enter a valid number
+	//loops is stopped if user entered q to stop updating/purchasing
+	while (isNumber == false && number != "q") {
+		//if user input is empty, they will be asked to enter again
 		if (number == "") {
 			isNumber = false;
 		}
 		else {
 			isNumber = true;
+			int dotCount = 0;
+			//checks each letter in user input to see if it is a number
 			for (i = 0; i < number.size(); ++i) {
 				if (isdigit(number.at(i)) == false && number.at(i) != '.') {
 					isNumber = false;
 				}
+				//checks number of periods in number
+				if (number.at(i) == '.') {
+					dotCount += 1;
+				}
+			}
+			//if more than one period in number, number is not valid
+			if (dotCount > 1) {
+				isNumber = false;
 			}
 		}
+		//if user did not enter a valid number, they will be asked again.=
 		if (isNumber == false) {
 			cout << "Please enter a number:" << endl;
 			getline(cin, number);
@@ -107,46 +123,57 @@ void SalesHistory::PurchaseProduct() {
 	Sales newSale;
 	ofstream outFS;
 
+	cout << "(Enter 'q' at any time to quit purchasing a product)" << endl;
 	//Gets user entered sale info
 	newSale = GetSaleInfo();
+	//Stops purchasing product if user entered q at any time
+	if (newSale.GetDate() == "q") {
+		cout << "Stopped purchasing product." << endl;
+		return;
+	}
 	//Sets new sale's ID to latest sale ID + 1
 	newSale.SetSaleID(allSales.at(allSales.size()-1).GetSaleID()+1);
 	allSales.push_back(newSale);
 	
 	//Writes to SalesHistory.txt file
 	outFS.open("SalesHistory.txt", ios::app);
+	//Error if failed to open file
 	if (!outFS.is_open()) {
 		cout << "Failed to open file." << endl;
 		return;
 	}
 	else {
+		//writes new sale to file
 		outFS << "\n" << newSale.GetSaleID() << "\n" << newSale.GetDate() << "\n" << newSale.GetClientID() << "\n";
 		outFS << newSale.GetProductID() << "\n" << newSale.GetProductSales() << "\n" << newSale.GetSalesRepID();
 	}
 	outFS.close();
-	cout << "Product purchased." << endl;
+	//Prints information of purchased product
+	cout << "Product purchased successfully. Sale information below:" << endl << endl;
+	PrintSaleHistoryTitles();
+	PrintSaleHistory(newSale);
 }
 
-//Prints current sale from file
+//Prints current sale from file with formatting
 void SalesHistory::PrintSaleHistory(Sales currentSale) {
 	cout << left << setfill(' ');
 	cout << setw(11) << currentSale.GetSaleID() << "| ";
 	cout << setw(11) << currentSale.GetDate() << "| ";
 	cout << setw(11) << currentSale.GetClientID() << "| ";
 	cout << setw(11) << currentSale.GetProductID() << "| ";
-	cout << setprecision(4) << setw(11) << currentSale.GetProductSales() << "| ";
+	cout << fixed << setprecision(2) << setw(16) << currentSale.GetProductSales() << "| ";
 	cout << setprecision(2) << setw(11) << currentSale.GetSalesRepID() << endl;
 	cout << right;
 }
 
-//Print titles of each sale information category
+//Print titles of each sale information category with formatting
 void SalesHistory::PrintSaleHistoryTitles() {
 	cout << left << setfill(' ');
 	cout << setw(11) << "SaleID" << "| ";
 	cout << setw(11) << "Date" << "| ";
 	cout << setw(11) << "ClientID" << "| ";
 	cout << setw(11) << "ProductID" << "| ";
-	cout << setw(11) << "Sales" << "| ";
+	cout << setw(16) << "Sales" << "| ";
 	cout << setw(11) << "RepID" << endl;
 	cout << setfill('-') << setw(76) << "" << endl;
 	cout << right;
@@ -156,6 +183,7 @@ void SalesHistory::PrintSaleHistoryTitles() {
 void SalesHistory::PrintAllSalesHistory() {
 	unsigned int i;
 	PrintSaleHistoryTitles();
+	//loops through all sales from vector and calls function to print each sale individually
 	for (i = 0; i < allSales.size(); ++i) {
 		Sales currentSale = allSales.at(i);
 		PrintSaleHistory(currentSale);
@@ -168,10 +196,12 @@ void SalesHistory::PrintClientSalesHistory() {
 	bool clientExists = false;
 	unsigned int i;
 
+	cout << "(Enter 'q' quit looking at clients' sales history)" << endl;
 	cout << "Enter the client's ID: " << endl;
-	getline(cin, clientID);
-	cout << endl;
-	if (clientID != "q") {
+	//gets user input which must be a number or q
+	clientID = enterNumber();
+	//Loop for asking for user input until client ID is found or user enters q
+	while (clientID != "q" && clientExists == false) {
 		for (i = 0; i < allSales.size(); ++i) {
 			Sales currentSale = allSales.at(i);
 			//Checks if client ID exists
@@ -181,6 +211,7 @@ void SalesHistory::PrintClientSalesHistory() {
 		}
 		//Prints titles for each sale information category
 		if (clientExists == true) {
+			cout << endl;
 			PrintSaleHistoryTitles();
 		}
 		//Prints each sale belonging to specified client
@@ -190,40 +221,53 @@ void SalesHistory::PrintClientSalesHistory() {
 				PrintSaleHistory(currentSale);
 			}
 		}
+		//Asks user for input again if client ID does not exist
 		if (clientExists == false) {
 			cout << "The client does not exist." << endl;
+			cout << "Enter the client's ID: " << endl;
+			clientID = enterNumber();
 		}
 	}
 }
 
-//Gets user entered info for updating or creating a sale
+//Gets user entered info for updating or creating a sale, if user entered q at any time then stop updating/purchasing
 Sales SalesHistory::GetSaleInfo() {
 	Sales currentSale;
-	string enterInfo;
+	Sales quitSale(0,"q", 0, 0, 0, 0);
+	string date;
+	string clientID;
+	string productID;
+	string productSales;
+	string salesRepID;
 
 	cout << "Enter Date (mm/dd/yyyy):" << endl;
-	getline(cin, enterInfo);
-	while (enterInfo == "") {
+	getline(cin, date);
+	while (date == "") {
 		cout << "Please enter a date:" << endl;
-		getline(cin, enterInfo);
+		getline(cin, date);
 	}
-	currentSale.SetDate(enterInfo);
+	if (date == "q") { return quitSale; }
+	currentSale.SetDate(date);
 
 	cout << "Enter Client ID:" << endl;
-	enterInfo = enterNumber();
-	currentSale.SetClientID(stoi(enterInfo));
+	clientID = enterNumber();
+	if (clientID == "q") { return quitSale; }
+	currentSale.SetClientID(stoi(clientID));
 
 	cout << "Enter Product ID:" << endl;
-	enterInfo = enterNumber();
-	currentSale.SetProductID(stoi(enterInfo));
+	productID = enterNumber();
+	if (productID == "q") { return quitSale; }
+	currentSale.SetProductID(stoi(productID));
 
 	cout << "Enter Product Sales:" << endl;
-	enterInfo = enterNumber();
-	currentSale.SetProductSales(stod(enterInfo));
+	productSales = enterNumber();
+	if (productSales == "q") { return quitSale; }
+	currentSale.SetProductSales(stod(productSales));
 
 	cout << "Enter Sales Representative ID:" << endl;
-	enterInfo = enterNumber();
-	currentSale.SetSalesRepID(stoi(enterInfo));
+	salesRepID = enterNumber();
+	if (salesRepID == "q") { return quitSale; }
+	currentSale.SetSalesRepID(stoi(salesRepID));
 
 	return currentSale;
 }
@@ -236,9 +280,12 @@ void SalesHistory::UpdateSales(string option, string updateInfo)
 		bool saleExists = false;
 		unsigned int i;
 
+		cout << "(Enter 'q' at any time to quit updating a sale)" << endl;
 		cout << "Enter the sale's ID: " << endl;
 		getline(cin, saleID);
-		if (saleID != "q") {
+		//Loops for asking user for sale ID until the ID is found or the user enters q
+		while (saleID != "q" && saleExists == false) {
+			//loops through all sales in vector
 			for (i = 0; i < allSales.size(); ++i) {
 				Sales currentSale = allSales.at(i);
 				int currentSaleID = currentSale.GetSaleID();
@@ -249,9 +296,12 @@ void SalesHistory::UpdateSales(string option, string updateInfo)
 
 					saleExists = true;
 					currentSale = GetSaleInfo();
+					//stops updating the sale if user entered q at any point in updating sale
+					if (currentSale.GetDate() == "q") {
+						cout << "Stopped updating sale." << endl;
+						break;
+					}
 					currentSale.SetSaleID(currentSaleID);
-					//updates sale in sale history after getting entered info
-					allSales.at(i) = currentSale;
 
 					//Writes to SalesHistory.txt file
 					outFS.open("SalesHistory.txt");
@@ -260,6 +310,7 @@ void SalesHistory::UpdateSales(string option, string updateInfo)
 						return;
 					}
 					else {
+						//writes each info from each sale per line
 						for (j = 0; j < allSales.size(); ++j) {
 							if (j == 0) {
 								outFS << allSales.at(j).GetSaleID();
@@ -272,12 +323,25 @@ void SalesHistory::UpdateSales(string option, string updateInfo)
 						}
 					}
 					outFS.close();
-					cout << "Updated Sale." << endl;
+					//Prints old to new update information
+					cout << "Updated sale successfully. Update information below from old to new." << endl << endl;
+					PrintSaleHistoryTitles();
+					PrintSaleHistory(allSales.at(i));
+					PrintSaleHistory(currentSale);
+					//updates sale in sale history from entered info
+					allSales.at(i) = currentSale;
 				}
 			}
+			//Asks for user input again if sale ID is not found
 			if (saleExists == false) {
 				cout << "The sale does not exist." << endl;
+				cout << "Enter the sale's ID: " << endl;
+				getline(cin, saleID);
 			}
 		}
+	}
+	else {
+		//prints if user entered letter q to stop updating
+		cout << "Stopped updating sale." << endl;
 	}
 }
