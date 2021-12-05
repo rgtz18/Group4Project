@@ -28,13 +28,17 @@
 //           1.1             Rgtz18      11/10/2021      Created Sales reperesentatives menu, category & class 
 // ===================================================================================================================
 
-
+#include "Product.h"
+#include "SalesHistory.h"
+#include "Sales.h"
 #include <iostream>
 #include <algorithm>
 #include <fstream>
 #include <string>
-#include "Product.h"
+#include <vector>
+
 using namespace std;
+SalesHistory history; //gets sales info
 ifstream inFS;   // Input file stream
 string fileRowData;     // File data
 int fileRow;
@@ -420,9 +424,43 @@ void ProductMenu() {
    }
 }
 
-int main () {
+int main() {
 
-salesRepMenu();
+    string userSelect = "";
+    //shows list of options user can select from
+    //loop for user input until they enter the letter 'q'
+    while (userSelect != "q") {
+        cout << "Dunder Mifflin Database" << endl;
+        cout << "1) " << "Product Menu" << endl;
+        cout << "2) " << "Sales Menu" << endl;
+        cout << "3) " << "Client Menu" << endl;
+        cout << "4) " << "Sales Representatives Menu" << endl;
+        cout << "q) " << "Quit Program" << endl << endl;
+        cout << "Choose an option: " << endl;
 
-   return 0;
+        getline(cin, userSelect);
+
+        //options must be numbers 1-4 or q, calls function respective to option stated
+        if (userSelect == "1") {
+            ProductMenu();
+        }
+        else if (userSelect == "2") {
+            history.SalesHistoryMenu();
+        }
+        else if (userSelect == "3") {
+            //==============FIX ME==============
+            //ClientMenu();
+        }
+        else if (userSelect == "4") {
+            salesRepMenu();
+        }
+        else if (userSelect == "q") {
+            return 0;
+        }
+        else {
+            cout << "Please enter one key from the list of options." << endl << endl;
+        }
+    }
+
+    return 0;
 }
