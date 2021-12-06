@@ -434,7 +434,7 @@ int main() {
 
     string userSelect = "";
     //shows list of options user can select from
-    //loop for user input until they enter the letter 'q'
+    //loop for user input until they enter the letter 'q' which exits the program
     while (userSelect != "q") {
         cout << "Dunder Mifflin Database" << endl;
         cout << "1) " << "Product Menu" << endl;
