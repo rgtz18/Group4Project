@@ -329,6 +329,7 @@ cout << "2) " << "List of Current Monthly Sales" << endl;
 cout << "3) " << "Add a new Sales Representative" << endl;
 cout << "4) " << "Update Current Sales Representative Information" << endl;
 cout << "5) " << "Calculate Yearly Bonus" << endl;
+cout << "q) " << "Quit Sales Representatives Menu" << endl;
 cout << endl;
 cout << "Choose an option: " << endl;
 
@@ -379,6 +380,7 @@ void ProductMenu() {
       cout << "5) Print Product" << endl;
       cout << "6) Print All Products" << endl;
       cout << "7) Print Monthly Sales Report" << endl;
+      cout << "q) " << "Quit Product Menu" << endl;
       cout << endl;
       cout << "Choose an option: " << endl;
       
