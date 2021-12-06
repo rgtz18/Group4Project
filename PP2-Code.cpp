@@ -20,6 +20,10 @@
 //       - Escobedo, Jonathan
 //       - Kim, Arthur
 //       - Nguyen, Michael
+//         + SalesHistory class
+//         + Sales class
+//         + Sales menu
+//         + Main menu
 //
 //   Change Log:
 //           Version         User        Date            Changes
