@@ -15,6 +15,7 @@ class SalesHistory
 		void PrintClientSalesHistory();
 		void UpdateSales(string option, string updateInfo);
 		string enterNumber();
+		string checkDate();
 		Sales GetSaleInfo();
 	private:
 		vector<Sales> allSales;

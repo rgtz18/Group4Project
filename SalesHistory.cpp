@@ -117,6 +117,47 @@ string SalesHistory::enterNumber() {
 	return number;
 }
 
+//checks if user input is a valid date
+string SalesHistory::checkDate() {
+	string date;
+	bool isDate = false;
+	unsigned int i;
+
+	getline(cin, date);
+	//loop for asking user for input until they enter a valid date
+	//loops is stopped if user entered q to stop updating/purchasing
+	while (isDate== false && date != "q") {
+		//if user input is empty, they will be asked to enter again
+		if (date == "" || date.size() != 10) {
+			isDate = false;
+		}
+		else {
+			isDate = true;
+			int dashCount = 0;
+			//checks each letter in user input to see if it is a number
+			for (i = 0; i < date.size(); ++i) {
+				if (isdigit(date.at(i)) == false && date.at(i) != '/') {
+					isDate = false;
+				}
+				//checks number of periods in number
+				if (date.at(i) == '/') {
+					dashCount += 1;
+				}
+			}
+			//if more than one period in number, number is not valid
+			if (dashCount > 2 || date.at(2) != '/' || date.at(5) != '/') {
+				isDate = false;
+			}
+		}
+		//if user did not enter a valid date, they will be asked again.=
+		if (isDate == false) {
+			cout << "Please enter a valid date:" << endl;
+			getline(cin, date);
+		}
+	}
+	return date;
+}
+
 //Allows user to purchase a product
 void SalesHistory::PurchaseProduct() {
 	string enterInfo;
@@ -240,11 +281,7 @@ Sales SalesHistory::GetSaleInfo() {
 	string salesRepID;
 
 	cout << "Enter Date (mm/dd/yyyy):" << endl;
-	getline(cin, date);
-	while (date == "") {
-		cout << "Please enter a date:" << endl;
-		getline(cin, date);
-	}
+	date = checkDate();
 	if (date == "q") { return quitSale; }
 
 	cout << "Enter Client ID:" << endl;
