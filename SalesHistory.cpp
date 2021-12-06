@@ -39,7 +39,6 @@ SalesHistory::SalesHistory() {
 //Shows menu of options user can select from
 void SalesHistory::SalesHistoryMenu() {
 	string userSelect = "";
-	string selectedID = "";
 
 	//loop for user input until they enter the letter 'q'
 	while (userSelect != "q") {
@@ -69,6 +68,7 @@ void SalesHistory::SalesHistoryMenu() {
 			UpdateSales("all", "");
 		}
 		else if (userSelect == "q") {
+			return;
 		}
 		else {
 			cout << "Please enter one key from the list of options." << endl;
@@ -232,7 +232,6 @@ void SalesHistory::PrintClientSalesHistory() {
 
 //Gets user entered info for updating or creating a sale, if user entered q at any time then stop updating/purchasing
 Sales SalesHistory::GetSaleInfo() {
-	Sales currentSale;
 	Sales quitSale(0,"q", 0, 0, 0, 0);
 	string date;
 	string clientID;
@@ -247,27 +246,24 @@ Sales SalesHistory::GetSaleInfo() {
 		getline(cin, date);
 	}
 	if (date == "q") { return quitSale; }
-	currentSale.SetDate(date);
 
 	cout << "Enter Client ID:" << endl;
 	clientID = enterNumber();
 	if (clientID == "q") { return quitSale; }
-	currentSale.SetClientID(stoi(clientID));
 
 	cout << "Enter Product ID:" << endl;
 	productID = enterNumber();
 	if (productID == "q") { return quitSale; }
-	currentSale.SetProductID(stoi(productID));
 
 	cout << "Enter Product Sales:" << endl;
 	productSales = enterNumber();
 	if (productSales == "q") { return quitSale; }
-	currentSale.SetProductSales(stod(productSales));
 
 	cout << "Enter Sales Representative ID:" << endl;
 	salesRepID = enterNumber();
 	if (salesRepID == "q") { return quitSale; }
-	currentSale.SetSalesRepID(stoi(salesRepID));
+
+	Sales currentSale(0, date, stoi(clientID), stoi(productID), stod(productSales), stoi(salesRepID));
 
 	return currentSale;
 }
