@@ -77,7 +77,7 @@ void SalesHistory::SalesHistoryMenu() {
 }
 
 //Allows user to enter a number and checks if it is a number
-string SalesHistory::enterNumber() {
+string SalesHistory::checkNumber() {
 	string number;
 	bool isNumber = false;
 	unsigned int i;
@@ -144,12 +144,38 @@ string SalesHistory::checkDate() {
 					dashCount += 1;
 				}
 			}
-			//if more than one period in number, number is not valid
+			//checks if numbers are valid in date
+			if (isDate == true) {
+				//checks if month numbers are greater than 0 and less than 13
+				if (date.at(0) != '0') {
+					if (stoi(date.substr(0, 2)) > 12) {
+						isDate = false;
+					}
+				}
+				//checks if day numbers are greater than 0 and less than 32
+				if (date.at(3) != '0') {
+					if (stoi(date.substr(3, 2)) > 31) {
+						isDate = false;
+					}
+				}
+				//checks if year number is greater than 0 and greater than 1500
+				if (date.at(6) != '0') {
+					if (stoi(date.substr(6, 4)) < 1500) {
+						isDate = false;
+					}
+				}
+				//for checking if greater than 0
+				if (date.substr(0, 2) == "00" || date.substr(3, 2) == "00" || date.at(6) == '0') {
+					isDate = false;
+				}
+				
+			}
+			//if more than one dash in date or dashes not in correct position, date is not valid
 			if (dashCount > 2 || date.at(2) != '/' || date.at(5) != '/') {
 				isDate = false;
 			}
 		}
-		//if user did not enter a valid date, they will be asked again.=
+		//if user did not enter a valid date, they will be asked again.
 		if (isDate == false) {
 			cout << "Please enter a valid date:" << endl;
 			getline(cin, date);
@@ -240,7 +266,7 @@ void SalesHistory::PrintClientSalesHistory() {
 	cout << "(Enter 'q' quit looking at clients' sales history)" << endl;
 	cout << "Enter the client's ID: " << endl;
 	//gets user input which must be a number or q
-	clientID = enterNumber();
+	clientID = checkNumber();
 	//Loop for asking for user input until client ID is found or user enters q
 	while (clientID != "q" && clientExists == false) {
 		for (i = 0; i < allSales.size(); ++i) {
@@ -266,7 +292,7 @@ void SalesHistory::PrintClientSalesHistory() {
 		if (clientExists == false) {
 			cout << "The client does not exist." << endl;
 			cout << "Enter the client's ID: " << endl;
-			clientID = enterNumber();
+			clientID = checkNumber();
 		}
 	}
 }
@@ -285,19 +311,19 @@ Sales SalesHistory::GetSaleInfo() {
 	if (date == "q") { return quitSale; }
 
 	cout << "Enter Client ID:" << endl;
-	clientID = enterNumber();
+	clientID = checkNumber();
 	if (clientID == "q") { return quitSale; }
 
 	cout << "Enter Product ID:" << endl;
-	productID = enterNumber();
+	productID = checkNumber();
 	if (productID == "q") { return quitSale; }
 
 	cout << "Enter Product Sales:" << endl;
-	productSales = enterNumber();
+	productSales = checkNumber();
 	if (productSales == "q") { return quitSale; }
 
 	cout << "Enter Sales Representative ID:" << endl;
-	salesRepID = enterNumber();
+	salesRepID = checkNumber();
 	if (salesRepID == "q") { return quitSale; }
 
 	Sales currentSale(0, date, stoi(clientID), stoi(productID), stod(productSales), stoi(salesRepID));
@@ -315,7 +341,7 @@ void SalesHistory::UpdateSales(string option, string updateInfo)
 
 		cout << "(Enter 'q' at any time to quit updating a sale)" << endl;
 		cout << "Enter the sale's ID: " << endl;
-		getline(cin, saleID);
+		saleID = checkNumber();
 		//Loops for asking user for sale ID until the ID is found or the user enters q
 		while (saleID != "q" && saleExists == false) {
 			//loops through all sales in vector
@@ -369,7 +395,7 @@ void SalesHistory::UpdateSales(string option, string updateInfo)
 			if (saleExists == false) {
 				cout << "The sale does not exist." << endl;
 				cout << "Enter the sale's ID: " << endl;
-				getline(cin, saleID);
+				saleID = checkNumber();
 			}
 		}
 	}

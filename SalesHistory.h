@@ -14,7 +14,7 @@ class SalesHistory
 		void PrintAllSalesHistory();
 		void PrintClientSalesHistory();
 		void UpdateSales(string option, string updateInfo);
-		string enterNumber();
+		string checkNumber();
 		string checkDate();
 		Sales GetSaleInfo();
 	private:
