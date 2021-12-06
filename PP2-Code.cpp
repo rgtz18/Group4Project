@@ -17,6 +17,7 @@
 //         + Product class
 //         + Product menu
 //       - Delgado, Stepahnie
+//       - Escobedo, Jonathan
 //       - Nguyen, Michael
 //         + SalesHistory class
 //         + Sales class
