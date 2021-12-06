@@ -320,7 +320,7 @@ void salesRepMenu() {
 char userSelect = '0';
 string selectedId = "0";
 
-while(userSelect != '1' && userSelect != '2' && userSelect != '3' && userSelect != '4' && userSelect != '5'){  
+while(userSelect != 'q'){  
 
 cout << "1) " << "List of Current Sales Representatives" << endl;
 cout << "2) " << "List of Current Monthly Sales" << endl;
@@ -353,6 +353,9 @@ cin >> userSelect;
          cin >> selectedId;
          calcSalesBonus(selectedId);  
     }
+     else if (userSelect == 'q') {
+         return;  
+    }
       else {
          cout << "Pressed Wrong Key. Press any key to try again " << endl;
       }
@@ -365,7 +368,7 @@ void ProductMenu() {
    double productPrice;
    double productSales;
    
-   while(userSelect != '1' && userSelect != '2' && userSelect != '3' && userSelect != '4' && userSelect != '5' && userSelect != '6' && userSelect != '7') {
+   while(userSelect != 'q') {
       
       cout << "1) Add Product" << endl;
       cout << "2) Remove Product" << endl;
@@ -417,6 +420,9 @@ void ProductMenu() {
       }
       else if (userSelect == '7') {
          PrintMonthlySales();
+      }
+      else if (userSelect == 'q') {
+         return;  
       }
       else {
          cout << "Pressed Wrong Key. Press any key to try again " << endl;
