@@ -16,7 +16,9 @@
 //       - Caldwell, Aaron
 //         + Product class
 //         + Product menu
-//       - Delgado, Stepahnie
+//       - Delgado, Stephanie
+//         + Client class
+           + Client menu
 //       - Escobedo, Jonathan
 //       - Nguyen, Michael
 //         + SalesHistory class
@@ -31,6 +33,7 @@
 //           1.1             Rgtz18      11/10/2021      Created Sales reperesentatives menu, category & class 
 // ===================================================================================================================
 
+#include "Clients.h"
 #include "Product.h"
 #include "SalesHistory.h"
 #include "Sales.h"
@@ -365,6 +368,53 @@ cin >> userSelect;
       }
 }      
 }
+
+
+//client menu //
+
+void clientMenu() {
+char userSelect = '0';
+string selectedId = "0";
+
+while(userSelect != 'q'){  
+
+cout << "1) " << "List of Current Clients" << endl;
+cout << "2) " << "List of Specific Client Information" << endl;
+cout << "3) " << "Add a new client" << endl;
+cout << "4) " << "Update Current Client Information" << endl;
+cout << "q) " << "Quit Client Menu" << endl;
+cout << endl;
+cout << "Choose an option: " << endl;
+
+cin >> userSelect;
+
+     if (userSelect == '1'){
+         clientList();
+    }
+     else if (userSelect == '2'){
+        cout << "Enter an ID: " << endl;
+        cin >> selectedId;
+         clientList(selectedId);  
+    } 
+     else if (userSelect == '3'){
+         newClient();   
+    }      
+     else if (userSelect == '4'){
+        cout << "Enter an ID to Update: " << endl;
+        cin >> selectedId;
+         updateClientInfo(selectedId);  
+    
+    }
+     else if (userSelect == 'q') {
+         return;  
+    }
+      else {
+         cout << "Pressed Wrong Key. Press any key to try again " << endl;
+      }
+}      
+}
+
+//product menu //
 
 void ProductMenu() {
    char userSelect = '0';
