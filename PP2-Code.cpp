@@ -18,8 +18,9 @@
 //         + Product menu
 //       - Delgado, Stephanie
 //         + Client class
-           + Client menu
+//         + Client menu
 //       - Escobedo, Jonathan
+//         + PowerPoint Presentation
 //       - Nguyen, Michael
 //         + SalesHistory class
 //         + Sales class
@@ -509,8 +510,7 @@ int main() {
             history.SalesHistoryMenu();
         }
         else if (userSelect == "3") {
-            //==============FIX ME==============
-            //ClientMenu();
+            clientMenu();
         }
         else if (userSelect == "4") {
             salesRepMenu();
