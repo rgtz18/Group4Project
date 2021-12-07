@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 #include "Product.h"
@@ -10,35 +11,11 @@ Product::Product() {
     productSales = 0;
 }
 
-void Product::SetProductName(string name) {
-    productName = name;
-}
-
-void Product::SetProductPrice(double price) {
-    productPrice = price;
-}
-
-void Product::SetProductSales(double sales) {
-    productSales = sales;
-}
-
-string Product::GetProductName() {
-    return productName;
-}
-
-double Product::GetProductPrice() {
-    return productPrice;
-}
-
-double Product::GetProductSales() {
-    return productSales;
-}
-
 //Adds a product to the product list
-void Product::AddProduct(string name, double price, double sales) {
-    nameList.push_back(productName);
-    priceList.push_back(productPrice);
-    salesList.push_back(productSales);
+void Product::AddProduct(string name, double price, int sales) {
+    nameList.push_back(name);
+    priceList.push_back(price);
+    salesList.push_back(sales);
 }
 
 //Removes a product from the product list
@@ -55,30 +32,26 @@ void Product::RemoveProduct(string name) {
 }
 
 //Updates a product in the product list
-void Product::UpdateProduct(string name, double price, double sales) {
+void Product::UpdateProduct(string name, double price, int sales) {
     unsigned int i;
     for (i = 0; i < nameList.size(); ++i) {
         if (name == nameList.at(i)) {
-            priceList.at(i) = productPrice;
-            salesList.at(i) = productSales;
+            priceList.at(i) = price;
+            salesList.at(i) = sales;
             break;
         }
     }
 }
 
-//Saves the product list to a file
-void Product::SaveProduct() {
-    //**FIX ME**
-}
-
 //Prints the information for a specific product in the product list
 void Product::PrintProduct(string name) {
     unsigned int i;
-    for (i = 0; i < nameList.at(i); ++i) {
+    for (i = 0; i < nameList.size(); ++i) {
         if (name == nameList.at(i)) {
+            cout << fixed << setprecision(2);
             cout << "Product: " << nameList.at(i) << endl;
-            cout << "Price: " << priceList.at(i) << endl;
-            cout << "Sales: " << salesList.at(i) << endl;
+            cout << "Price: $" << priceList.at(i) << endl;
+            cout << "Sold " << salesList.at(i) << " for $" << salesList.at(i) * priceList.at(i) << endl;
         }
     }
 }
@@ -86,14 +59,9 @@ void Product::PrintProduct(string name) {
 //Prints the information of all products in the product list
 void Product::PrintAllProducts() {
     unsigned int i;
-    for (i = 0; i < nameList.at(i); ++i) {
-        cout << "Product " << i << " : " << nameList.at(i) << endl;
-        cout << "Price: " << priceList.at(i) << endl;
-        cout << "Sales: " << salesList.at(i) << endl << endl;
+    for (i = 0; i < nameList.size(); ++i) {
+        cout << "Product " << i+1 << ": " << nameList.at(i) << endl;
+        cout << "Price: $" << priceList.at(i) << endl;
+        cout << "Sold " << salesList.at(i) << " for $" << salesList.at(i) * priceList.at(i) << endl << endl;
     }
-}
-
-//Prints the monthly sales report
-void Product::PrintMonthlySales() {
-    //**FIX ME**
 }
