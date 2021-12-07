@@ -422,60 +422,58 @@ void ProductMenu() {
    string productName;
    double productPrice;
    double productSales;
+   Product product;
    
    while(userSelect != 'q') {
       
+      cout << "Product Menu" << endl;
       cout << "1) Add Product" << endl;
       cout << "2) Remove Product" << endl;
       cout << "3) Update Product" << endl;
-      cout << "4) Save Product List" << endl;
-      cout << "5) Print Product" << endl;
-      cout << "6) Print All Products" << endl;
-      cout << "7) Print Monthly Sales Report" << endl;
+      cout << "4) Print Product" << endl;
+      cout << "5) Print All Products" << endl;
       cout << "q) " << "Quit Product Menu" << endl;
       cout << endl;
       cout << "Choose an option: " << endl;
       
       cin >> userSelect;
+      cout << endl;
       
       if (userSelect == '1') {
          cout << "Enter a product name: " << endl;
          cin >> productName;
          cout << "Enter the price of the product: " << endl;
          cin >> productPrice;
-         cout << "Enter the sales of the product: " << endl;
+         cout << "Enter how many were sold: " << endl;
          cin >> productSales;
-         AddProduct(productName, productPrice, productSales);
+         product.AddProduct(productName, productPrice, productSales);
+         cout << endl;
       }
       else if (userSelect == '2') {
          cout << "Enter the name of the product you want to remove: " << endl;
          cin >> productName;
-         RemoveProduct(productName);
+         product.RemoveProduct(productName);
+         cout << endl;
       }
       else if (userSelect == '3') {
          cout << "Enter the name of the product you want to update: " << endl;
          cin >> productName;
          cout << "Enter the new price of the product: " << endl;
          cin >> productPrice;
-         cout << "Enter the sales of the product: " << endl;
+         cout << "Enter how many were sold: " << endl;
          cin >> productSales;
-         UpdateProduct(productName, productPrice, productSales);
+         product.UpdateProduct(productName, productPrice, productSales);
+         cout << endl;
       }
       else if (userSelect == '4') {
-         SaveProduct();
-         cout << "Product List saved." << endl;
+         cout << "Enter the name of the product you want to print: " << endl;
+         cin >> productName;
+         product.PrintProduct(productName);
          cout << endl;
       }
       else if (userSelect == '5') {
-         cout << "Enter the name of the product you want to print: " << endl;
-         cin >> productName;
-         PrintProduct(productName);
-      }
-      else if (userSelect == '6') {
-         PrintAllProducts();
-      }
-      else if (userSelect == '7') {
-         PrintMonthlySales();
+         product.PrintAllProducts();
+         cout << endl;
       }
       else if (userSelect == 'q') {
          return;  
