@@ -4,29 +4,23 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class Product {
     public:
         Product();
-        Product(name, price, sales);
-        void SetProductName(string name);
-        void SetProductPrice(double price);
-        void SetProductSales(double sales);
-        string GetProductName();
-        double GetProductPrice();
-        double GetProductSales();
-        void AddProduct(string name, double price, double sales);
+        Product(string name, double price, int sales);
+        void AddProduct(string name, double price, int sales);
         void RemoveProduct(string name);
-        void UpdateProduct(string name, double price, double sales);
-        void SaveProduct();
+        void UpdateProduct(string name, double price, int sales);
         void PrintProduct(string name);
         void PrintAllProducts();
-        void PrintMonthlySales();
     private:
         string productName;
         vector<string> nameList;
         double productPrice;
         vector<double> priceList;
-        double productSales;
-        vector<double> salesList;
+        int productSales;
+        vector<int> salesList;
 };
 #endif
