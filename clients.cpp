@@ -79,16 +79,6 @@ void clientlist() {
    inFS.close();
 }
 
-void monthlySalesList(string receivedClientId) {
-   bool matchId = false;
-   
-   cout << "Opening file clientlist.txt." << endl;
-   inFS.open("clientlist.txt");
-
-   if (!inFS.is_open()) {
-      cout << "Could not open file clientlist.txt." << endl;
-      return;
-   }
    
    cout << "Reading and printing specific client." << endl;
    inFS >> fileRowData;
@@ -112,7 +102,7 @@ void monthlySalesList(string receivedClientId) {
             }
          inFS >> fileRowData;
          }
-      } eailure before reaching end of file." << endl;
+    
    }
 
    cout << "Closing file clientlist.txt." << endl;
